@@ -1,7 +1,7 @@
 <template>
   <div class="filters">
     <input
-      v-model="search"
+      v-model="searchInput"
       class="filters__search"
       type="search"
       placeholder="Пошук за назвою…"
@@ -18,9 +18,13 @@
 
 <script setup lang="ts">
 import { PROJECT_STATUS_LABELS, ProjectStatus } from '@/types/enums'
+import { useDebouncedModel } from '@/composables/useDebounce'
 
 const search = defineModel<string>('search', { required: true })
 const status = defineModel<ProjectStatus | 'all'>('status', { required: true })
+
+// Debounce search by 300ms so filtering doesn't run on every keystroke.
+const searchInput = useDebouncedModel(search, 300)
 
 const statusOptions = Object.values(ProjectStatus)
 </script>
