@@ -41,6 +41,27 @@ const emit = defineEmits<{
 
 const tasksStore = useTasksStore()
 
+// Column definitions are static — only the rows change.
+const columns: TableConfig<Project>['columns'] = [
+  { key: 'id', label: 'ID', width: 90, sortable: true, sortAccessor: (p) => p.id },
+  { key: 'name', label: 'Назва проекту', width: 320, sortable: true, sortAccessor: (p) => p.name },
+  {
+    key: 'taskCount',
+    label: 'Завдань',
+    width: 120,
+    sortable: true,
+    sortAccessor: (p) => tasksStore.countByProject(p.id),
+  },
+  { key: 'status', label: 'Статус', width: 150, sortable: true, sortAccessor: (p) => p.status },
+  {
+    key: 'createdAt',
+    label: 'Дата створення',
+    width: 180,
+    sortable: true,
+    sortAccessor: (p) => Date.parse(p.createdAt),
+  },
+]
+
 const config = computed<TableConfig<Project>>(() => ({
   rows: props.projects,
   clickableRows: true,
@@ -50,25 +71,7 @@ const config = computed<TableConfig<Project>>(() => ({
   emptyText: 'Проектів не знайдено.',
   // Render in batches and load more on scroll when the list grows large.
   pageSize: 20,
-  columns: [
-    { key: 'id', label: 'ID', width: 90, sortable: true, sortAccessor: (p) => p.id },
-    { key: 'name', label: 'Назва проекту', width: 320, sortable: true, sortAccessor: (p) => p.name },
-    {
-      key: 'taskCount',
-      label: 'Завдань',
-      width: 120,
-      sortable: true,
-      sortAccessor: (p) => tasksStore.countByProject(p.id),
-    },
-    { key: 'status', label: 'Статус', width: 150, sortable: true, sortAccessor: (p) => p.status },
-    {
-      key: 'createdAt',
-      label: 'Дата створення',
-      width: 180,
-      sortable: true,
-      sortAccessor: (p) => Date.parse(p.createdAt),
-    },
-  ],
+  columns,
 }))
 
 const formatDate = (iso: string): string => new Date(iso).toLocaleDateString('uk-UA')
