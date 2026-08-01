@@ -15,16 +15,16 @@
           <th class="th" />
           <th class="th th--right">ID</th>
           <th class="th">
-            Назва завдання
+            Task name
             <span class="th__resizer" @mousedown="startResize('name', $event)" />
           </th>
           <th class="th">
-            Виконавець
+            Assignee
             <span class="th__resizer" @mousedown="startResize('assignee', $event)" />
           </th>
           <th class="th">
             <button class="th__sort" type="button" @click="toggleSort('status')">
-              Статус
+              Status
               <span class="th__sorticon" aria-hidden="true">
                 <span
                   class="th__caret th__caret--up"
@@ -40,7 +40,7 @@
           </th>
           <th class="th">
             <button class="th__sort" type="button" @click="toggleSort('dueDate')">
-              Термін
+              Due date
               <span class="th__sorticon" aria-hidden="true">
                 <span
                   class="th__caret th__caret--up"
@@ -54,7 +54,7 @@
             </button>
             <span class="th__resizer" @mousedown="startResize('dueDate', $event)" />
           </th>
-          <th class="th th--right">Дії</th>
+          <th class="th th--right">Actions</th>
         </tr>
       </thead>
 
@@ -73,7 +73,7 @@
               <span
                 class="drag-handle"
                 :class="{ 'drag-handle--off': !dragEnabled }"
-                :title="dragEnabled ? 'Перетягніть, щоб змінити порядок' : 'Скиньте сортування для ручного порядку'"
+                :title="dragEnabled ? 'Drag to change the order' : 'Clear sorting to reorder manually'"
                 >⠿</span
               >
             </td>
@@ -85,22 +85,22 @@
               {{ formatDate(element.dueDate) }}
             </td>
             <td class="td td--actions">
-              <button class="icon-btn" title="Редагувати" @click="emit('edit', element)">✎</button>
-              <button class="icon-btn icon-btn--danger" title="Видалити" @click="emit('remove', element.id)">🗑</button>
+              <button class="icon-btn" title="Edit" @click="emit('edit', element)">✎</button>
+              <button class="icon-btn icon-btn--danger" title="Delete" @click="emit('remove', element.id)">🗑</button>
             </td>
           </tr>
         </template>
       </draggable>
     </table>
 
-    <p v-if="sortedItems.length === 0" class="task-table__empty">Завдань не знайдено.</p>
+    <p v-if="sortedItems.length === 0" class="task-table__empty">No tasks found.</p>
     <BaseButton
       v-if="!dragEnabled"
       variant="ghost"
       class="task-table__reset"
       @click="sortState = null"
     >
-      Скинути сортування для ручного порядку
+      Clear sorting to reorder manually
     </BaseButton>
   </div>
 </template>
@@ -164,7 +164,7 @@ const dragModel = computed<Task[]>({
 
 const today = new Date().toISOString().slice(0, 10)
 const isOverdue = (task: Task): boolean => task.dueDate < today && task.status !== 'done'
-const formatDate = (iso: string): string => new Date(`${iso}T00:00:00`).toLocaleDateString('uk-UA')
+const formatDate = (iso: string): string => new Date(`${iso}T00:00:00`).toLocaleDateString('en-US')
 </script>
 
 <style scoped lang="scss">

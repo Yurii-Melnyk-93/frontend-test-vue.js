@@ -31,7 +31,7 @@
                 class="th__clear"
                 :class="{ 'th__clear--visible': directionFor(col.key) }"
                 role="button"
-                title="Скинути сортування"
+                title="Clear sorting"
                 @click.stop="sortState = null"
                 >×</span
               >
@@ -48,7 +48,7 @@
             class="th th--actions"
             :style="{ width: `${config.actionsWidth ?? 96}px` }"
           >
-            {{ config.actionsLabel ?? 'Дії' }}
+            {{ config.actionsLabel ?? 'Actions' }}
           </th>
         </tr>
       </thead>
@@ -85,7 +85,7 @@
       aria-hidden="true"
     />
 
-    <p v-if="isEmpty" class="table-empty">{{ config.emptyText ?? 'Немає даних.' }}</p>
+    <p v-if="isEmpty" class="table-empty">{{ config.emptyText ?? 'No data.' }}</p>
   </div>
 </template>
 

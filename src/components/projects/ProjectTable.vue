@@ -18,8 +18,8 @@
     </template>
 
     <template #actions="{ row }">
-      <button class="icon-btn" title="Редагувати" @click.stop="emit('edit', row)">✎</button>
-      <button class="icon-btn" title="Видалити" @click.stop="emit('remove', row.id)">🗑</button>
+      <button class="icon-btn" title="Edit" @click.stop="emit('edit', row)">✎</button>
+      <button class="icon-btn" title="Delete" @click.stop="emit('remove', row.id)">🗑</button>
     </template>
   </BaseTable>
 </template>
@@ -44,18 +44,18 @@ const tasksStore = useTasksStore()
 // Column definitions are static — only the rows change.
 const columns: TableConfig<Project>['columns'] = [
   { key: 'id', label: 'ID', width: 90, sortable: true, sortAccessor: (p) => p.id },
-  { key: 'name', label: 'Назва проекту', width: 320, sortable: true, sortAccessor: (p) => p.name },
+  { key: 'name', label: 'Project name', width: 320, sortable: true, sortAccessor: (p) => p.name },
   {
     key: 'taskCount',
-    label: 'Завдань',
+    label: 'Tasks',
     width: 120,
     sortable: true,
     sortAccessor: (p) => tasksStore.countByProject(p.id),
   },
-  { key: 'status', label: 'Статус', width: 150, sortable: true, sortAccessor: (p) => p.status },
+  { key: 'status', label: 'Status', width: 150, sortable: true, sortAccessor: (p) => p.status },
   {
     key: 'createdAt',
-    label: 'Дата створення',
+    label: 'Created',
     width: 180,
     sortable: true,
     sortAccessor: (p) => Date.parse(p.createdAt),
@@ -68,13 +68,13 @@ const config = computed<TableConfig<Project>>(() => ({
   resizable: true,
   storageKey: 'ptm.projects',
   defaultSort: { key: 'name', direction: 'asc' },
-  emptyText: 'Проектів не знайдено.',
+  emptyText: 'No projects found.',
   // Render in batches and load more on scroll when the list grows large.
   pageSize: 20,
   columns,
 }))
 
-const formatDate = (iso: string): string => new Date(iso).toLocaleDateString('uk-UA')
+const formatDate = (iso: string): string => new Date(iso).toLocaleDateString('en-US')
 </script>
 
 <style scoped lang="scss">

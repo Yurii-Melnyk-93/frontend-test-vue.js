@@ -1,6 +1,6 @@
 <template>
   <section class="project">
-    <RouterLink to="/" class="project__back">← Усі проекти</RouterLink>
+    <RouterLink to="/" class="project__back">← All Projects</RouterLink>
 
     <template v-if="project">
       <div class="project__head">
@@ -11,18 +11,18 @@
           </div>
           <p v-if="project.description" class="project__desc">{{ project.description }}</p>
         </div>
-        <BaseButton variant="primary" @click="openCreate">+ Додати завдання</BaseButton>
+        <BaseButton variant="primary" @click="openCreate">+ Add Task</BaseButton>
       </div>
 
       <div class="project__toolbar">
-        <div class="switch" role="tablist" aria-label="Режим відображення">
+        <div class="switch" role="tablist" aria-label="View mode">
           <button
             class="switch__btn"
             :class="{ 'switch__btn--active': viewMode === 'table' }"
             role="tab"
             @click="viewMode = 'table'"
           >
-            Таблиця
+            Table
           </button>
           <button
             class="switch__btn"
@@ -30,7 +30,7 @@
             role="tab"
             @click="viewMode = 'kanban'"
           >
-            Канбан
+            Kanban
           </button>
         </div>
 
@@ -62,7 +62,7 @@
       </Transition>
     </template>
 
-    <p v-else-if="!projectsStore.loading" class="project__missing">Проект не знайдено.</p>
+    <p v-else-if="!projectsStore.loading" class="project__missing">Project not found.</p>
 
     <TaskFormModal
       :open="modalOpen"
@@ -73,15 +73,15 @@
 
     <BaseModal
       :open="taskToDelete !== null"
-      title="Видалити завдання?"
+      title="Delete task?"
       @close="taskToDelete = null"
     >
       <p class="confirm-text">
-        Ви впевнені, що хочете видалити завдання «{{ taskToDelete?.name }}»? Дію не можна скасувати.
+        Are you sure you want to delete the task "{{ taskToDelete?.name }}"? This action cannot be undone.
       </p>
       <div class="confirm-actions">
-        <BaseButton variant="secondary" @click="taskToDelete = null">Скасувати</BaseButton>
-        <BaseButton variant="danger" @click="confirmDelete">Видалити</BaseButton>
+        <BaseButton variant="secondary" @click="taskToDelete = null">Cancel</BaseButton>
+        <BaseButton variant="danger" @click="confirmDelete">Delete</BaseButton>
       </div>
     </BaseModal>
   </section>
@@ -158,9 +158,9 @@ async function confirmDelete(): Promise<void> {
   }
   try {
     await tasksStore.deleteTask(task.id)
-    toast.success('Завдання видалено')
+    toast.success('Task deleted')
   } catch (e) {
-    toast.error(e instanceof ApiError ? e.message : 'Не вдалося видалити завдання')
+    toast.error(e instanceof ApiError ? e.message : 'Failed to delete the task')
   } finally {
     taskToDelete.value = null
   }

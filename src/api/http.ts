@@ -25,5 +25,5 @@ export function toApiError(error: unknown): ApiError {
   if (error instanceof Error) {
     return new ApiError(error.message, 0)
   }
-  return new ApiError('Невідома помилка запиту', 0)
+  return new ApiError('Unknown request error', 0)
 }

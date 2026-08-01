@@ -3,10 +3,10 @@
     <div class="card__head">
       <span class="card__id">#{{ task.id }}</span>
       <div class="card__actions">
-        <button class="card__btn" title="Редагувати" @click.stop="$emit('edit', task)">✎</button>
+        <button class="card__btn" title="Edit" @click.stop="$emit('edit', task)">✎</button>
         <button
           class="card__btn card__btn--danger"
-          title="Видалити"
+          title="Delete"
           @click.stop="$emit('remove', task.id)"
         >
           🗑
@@ -17,7 +17,7 @@
     <div class="card__meta">
       <span class="card__assignee">
         <span class="card__avatar">{{ task.assignee ? task.assignee.charAt(0) : '—' }}</span>
-        {{ task.assignee ?? 'Не призначено' }}
+        {{ task.assignee ?? 'Unassigned' }}
       </span>
       <span class="card__due" :class="{ 'card__due--overdue': isOverdue }">
         {{ formatDate(task.dueDate) }}
@@ -35,7 +35,7 @@ defineEmits<{ edit: [task: Task]; remove: [id: number] }>()
 
 const today = new Date().toISOString().slice(0, 10)
 const isOverdue = computed(() => props.task.dueDate < today && props.task.status !== 'done')
-const formatDate = (iso: string): string => new Date(`${iso}T00:00:00`).toLocaleDateString('uk-UA')
+const formatDate = (iso: string): string => new Date(`${iso}T00:00:00`).toLocaleDateString('en-US')
 </script>
 
 <style scoped lang="scss">

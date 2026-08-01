@@ -2,10 +2,10 @@
   <section class="projects">
     <div class="projects__head">
       <div>
-        <h1 class="projects__title">Проекти</h1>
-        <p class="projects__subtitle">Керуйте проектами та їхніми завданнями.</p>
+        <h1 class="projects__title">Projects</h1>
+        <p class="projects__subtitle">Manage your projects and their tasks.</p>
       </div>
-      <BaseButton variant="primary" @click="openCreate">+ Додати проект</BaseButton>
+      <BaseButton variant="primary" @click="openCreate">+ Add Project</BaseButton>
     </div>
 
     <div class="projects__layout">
@@ -13,7 +13,7 @@
         <ProjectFilters v-model:search="search" v-model:status="statusFilter" />
 
         <p v-if="error" class="projects__error">{{ error }}</p>
-        <p v-else-if="loading" class="projects__loading">Завантаження…</p>
+        <p v-else-if="loading" class="projects__loading">Loading…</p>
         <ProjectTable
           v-else
           :projects="filteredProjects"
@@ -32,16 +32,16 @@
 
     <BaseModal
       :open="projectToDelete !== null"
-      title="Видалити проект?"
+      title="Delete project?"
       @close="projectToDelete = null"
     >
       <p class="confirm-text">
-        Видалити проект «{{ projectToDelete?.name }}» разом з усіма його завданнями? Дію не можна
-        скасувати.
+        Delete the project "{{ projectToDelete?.name }}" together with all its tasks? This action
+        cannot be undone.
       </p>
       <div class="confirm-actions">
-        <BaseButton variant="secondary" @click="projectToDelete = null">Скасувати</BaseButton>
-        <BaseButton variant="danger" @click="confirmDelete">Видалити</BaseButton>
+        <BaseButton variant="secondary" @click="projectToDelete = null">Cancel</BaseButton>
+        <BaseButton variant="danger" @click="confirmDelete">Delete</BaseButton>
       </div>
     </BaseModal>
   </section>
@@ -115,9 +115,9 @@ async function confirmDelete(): Promise<void> {
     await projectsStore.deleteProject(project.id)
     // The mock cascade-clears the tasks — resync their store.
     await tasksStore.fetchAll()
-    toast.success('Проект видалено')
+    toast.success('Project deleted')
   } catch (e) {
-    toast.error(e instanceof ApiError ? e.message : 'Не вдалося видалити проект')
+    toast.error(e instanceof ApiError ? e.message : 'Failed to delete the project')
   } finally {
     projectToDelete.value = null
   }

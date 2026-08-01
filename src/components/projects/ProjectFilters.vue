@@ -4,11 +4,11 @@
       v-model="searchInput"
       class="filters__search"
       type="search"
-      placeholder="Пошук за назвою…"
-      aria-label="Пошук проектів за назвою"
+      placeholder="Search by name…"
+      aria-label="Search projects by name"
     />
-    <select v-model="status" class="filters__status" aria-label="Фільтр за статусом">
-      <option value="all">Усі статуси</option>
+    <select v-model="status" class="filters__status" aria-label="Filter by status">
+      <option value="all">All statuses</option>
       <option v-for="option in statusOptions" :key="option" :value="option">
         {{ PROJECT_STATUS_LABELS[option] }}
       </option>

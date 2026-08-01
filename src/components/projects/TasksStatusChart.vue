@@ -1,10 +1,10 @@
 <template>
   <div class="chart-card">
-    <h3 class="chart-card__title">Розподіл завдань за статусами</h3>
+    <h3 class="chart-card__title">Task Distribution by Status</h3>
     <div v-if="total > 0" class="chart-card__canvas">
       <Doughnut :data="chartData" :options="chartOptions" />
     </div>
-    <p v-else class="chart-card__empty">Немає завдань для відображення.</p>
+    <p v-else class="chart-card__empty">No tasks to display.</p>
   </div>
 </template>
 

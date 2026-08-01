@@ -1,15 +1,15 @@
 <template>
   <BaseModal
     :open="open"
-    :title="isEditing ? 'Редагувати завдання' : 'Нове завдання'"
+    :title="isEditing ? 'Edit Task' : 'New Task'"
     @close="emit('close')"
   >
     <form novalidate @submit.prevent="onSubmit">
-      <FormField label="Назва завдання" :error="errors.name" required>
-        <input v-model="name" v-bind="nameAttrs" type="text" placeholder="Що потрібно зробити?" />
+      <FormField label="Task name" :error="errors.name" required>
+        <input v-model="name" v-bind="nameAttrs" type="text" placeholder="What needs to be done?" />
       </FormField>
 
-      <FormField label="Статус" :error="errors.status" required>
+      <FormField label="Status" :error="errors.status" required>
         <select v-model="status" v-bind="statusAttrs">
           <option v-for="option in statusOptions" :key="option" :value="option">
             {{ TASK_STATUS_LABELS[option] }}
@@ -17,14 +17,14 @@
         </select>
       </FormField>
 
-      <FormField label="Виконавець" :error="errors.assignee">
+      <FormField label="Assignee" :error="errors.assignee">
         <select v-model="assignee" v-bind="assigneeAttrs">
-          <option value="">— Не призначено —</option>
+          <option value="">— Unassigned —</option>
           <option v-for="member in TEAM_MEMBERS" :key="member" :value="member">{{ member }}</option>
         </select>
       </FormField>
 
-      <FormField label="Термін виконання" :error="errors.dueDate" required>
+      <FormField label="Due date" :error="errors.dueDate" required>
         <input
           v-model="dueDate"
           v-bind="dueDateAttrs"
@@ -35,9 +35,9 @@
       </FormField>
 
       <div class="form-actions">
-        <BaseButton variant="secondary" type="button" @click="emit('close')">Скасувати</BaseButton>
+        <BaseButton variant="secondary" type="button" @click="emit('close')">Cancel</BaseButton>
         <BaseButton variant="primary" type="submit" :disabled="isSubmitting">
-          {{ isSubmitting ? 'Збереження…' : isEditing ? 'Зберегти' : 'Додати' }}
+          {{ isSubmitting ? 'Saving…' : isEditing ? 'Save' : 'Add' }}
         </BaseButton>
       </div>
     </form>
@@ -124,7 +124,7 @@ const onSubmit = handleSubmit(async (values) => {
         dueDate: values.dueDate,
         assignee: assigneeValue,
       })
-      toast.success('Завдання оновлено')
+      toast.success('Task updated')
     } else {
       await store.createTask({
         projectId: props.projectId,
@@ -133,11 +133,11 @@ const onSubmit = handleSubmit(async (values) => {
         dueDate: values.dueDate,
         assignee: assigneeValue,
       })
-      toast.success('Завдання успішно додано')
+      toast.success('Task added successfully')
     }
     emit('close')
   } catch (e) {
-    toast.error(e instanceof ApiError ? e.message : 'Не вдалося зберегти завдання')
+    toast.error(e instanceof ApiError ? e.message : 'Failed to save the task')
   }
 })
 </script>

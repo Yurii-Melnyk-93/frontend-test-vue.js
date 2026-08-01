@@ -3,7 +3,7 @@
     <header class="app-shell__header">
       <RouterLink to="/" class="app-shell__brand">
         <span class="app-shell__logo">PM</span>
-        <span>Управління проектами</span>
+        <span>Project Management</span>
       </RouterLink>
     </header>
 

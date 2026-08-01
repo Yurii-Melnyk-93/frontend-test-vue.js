@@ -23,7 +23,7 @@ export const useProjectsStore = defineStore('projects', () => {
     try {
       items.value = await projectsApi.getAll()
     } catch (e) {
-      error.value = e instanceof ApiError ? e.message : 'Не вдалося завантажити проекти'
+      error.value = e instanceof ApiError ? e.message : 'Failed to load projects'
     } finally {
       loading.value = false
     }

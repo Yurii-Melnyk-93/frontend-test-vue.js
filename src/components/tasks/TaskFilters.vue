@@ -1,12 +1,12 @@
 <template>
   <div class="task-filters">
-    <select v-model="assignee" aria-label="Фільтр за виконавцем">
-      <option value="all">Усі виконавці</option>
-      <option value="none">Без виконавця</option>
+    <select v-model="assignee" aria-label="Filter by assignee">
+      <option value="all">All assignees</option>
+      <option value="none">Unassigned</option>
       <option v-for="member in TEAM_MEMBERS" :key="member" :value="member">{{ member }}</option>
     </select>
-    <select v-model="status" aria-label="Фільтр за статусом">
-      <option value="all">Усі статуси</option>
+    <select v-model="status" aria-label="Filter by status">
+      <option value="all">All statuses</option>
       <option v-for="option in statusOptions" :key="option" :value="option">
         {{ TASK_STATUS_LABELS[option] }}
       </option>

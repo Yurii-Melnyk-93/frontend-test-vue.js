@@ -13,8 +13,8 @@ export enum TaskStatus {
 
 /** Project status labels. */
 export const PROJECT_STATUS_LABELS: Record<ProjectStatus, string> = {
-  [ProjectStatus.Active]: 'Активний',
-  [ProjectStatus.Archived]: 'Архівований',
+  [ProjectStatus.Active]: 'Active',
+  [ProjectStatus.Archived]: 'Archived',
 }
 
 /** Task status labels. */

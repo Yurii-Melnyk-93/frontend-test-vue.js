@@ -1,27 +1,27 @@
 <template>
   <BaseModal
     :open="open"
-    :title="isEditing ? 'Редагувати проект' : 'Новий проект'"
+    :title="isEditing ? 'Edit Project' : 'New Project'"
     @close="emit('close')"
   >
     <form novalidate @submit.prevent="onSubmit">
-      <FormField label="Назва проекту" :error="errors.name" required>
-        <input v-model="name" v-bind="nameAttrs" type="text" placeholder="Напр. Редизайн сайту" />
+      <FormField label="Project name" :error="errors.name" required>
+        <input v-model="name" v-bind="nameAttrs" type="text" placeholder="E.g. Website redesign" />
       </FormField>
 
-      <FormField label="Опис проекту" :error="errors.description">
+      <FormField label="Project description" :error="errors.description">
         <textarea
           v-model="description"
           v-bind="descriptionAttrs"
           rows="3"
-          placeholder="Необов'язково"
+          placeholder="Optional"
         />
       </FormField>
 
       <div class="form-actions">
-        <BaseButton variant="secondary" type="button" @click="emit('close')">Скасувати</BaseButton>
+        <BaseButton variant="secondary" type="button" @click="emit('close')">Cancel</BaseButton>
         <BaseButton variant="primary" type="submit" :disabled="submitting">
-          {{ submitting ? 'Збереження…' : isEditing ? 'Зберегти' : 'Створити' }}
+          {{ submitting ? 'Saving…' : isEditing ? 'Save' : 'Create' }}
         </BaseButton>
       </div>
     </form>
@@ -81,14 +81,14 @@ const onSubmit = handleSubmit(async (values) => {
         name: values.name,
         description: values.description,
       })
-      toast.success('Проект оновлено')
+      toast.success('Project updated')
     } else {
       await store.createProject({ name: values.name, description: values.description })
-      toast.success('Проект успішно створено')
+      toast.success('Project created successfully')
     }
     emit('close')
   } catch (e) {
-    toast.error(e instanceof ApiError ? e.message : 'Не вдалося зберегти проект')
+    toast.error(e instanceof ApiError ? e.message : 'Failed to save the project')
   } finally {
     submitting.value = false
   }

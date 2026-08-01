@@ -5,7 +5,7 @@
         <div class="modal__dialog" role="dialog" aria-modal="true">
           <header class="modal__header">
             <h2 class="modal__title">{{ title }}</h2>
-            <button class="modal__close" aria-label="Закрити" @click="emit('close')">×</button>
+            <button class="modal__close" aria-label="Close" @click="emit('close')">×</button>
           </header>
           <div class="modal__body">
             <slot />

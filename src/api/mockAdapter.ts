@@ -67,7 +67,7 @@ function handleProjects(method: string, id: number | null, body: unknown): unkno
     case 'put': {
       const index = projects.findIndex((p) => p.id === id)
       if (index === -1) {
-        throw new ApiError('Проект не знайдено', 404)
+        throw new ApiError('Project not found', 404)
       }
       const patch = parseBody<ProjectUpdateDto>(body)
       const updated: Project = { ...projects[index], ...patch, id: projects[index].id }
@@ -80,7 +80,7 @@ function handleProjects(method: string, id: number | null, body: unknown): unkno
     case 'delete': {
       const exists = projects.some((p) => p.id === id)
       if (!exists) {
-        throw new ApiError('Проект не знайдено', 404)
+        throw new ApiError('Project not found', 404)
       }
       storage.setProjects(projects.filter((p) => p.id !== id))
       // Cascade-delete the project's tasks.
@@ -89,7 +89,7 @@ function handleProjects(method: string, id: number | null, body: unknown): unkno
     }
 
     default:
-      throw new ApiError(`Метод ${method} не підтримується`, 405)
+      throw new ApiError(`Method ${method} is not supported`, 405)
   }
 }
 
@@ -130,7 +130,7 @@ function handleTasks(
     case 'put': {
       const index = tasks.findIndex((t) => t.id === id)
       if (index === -1) {
-        throw new ApiError('Завдання не знайдено', 404)
+        throw new ApiError('Task not found', 404)
       }
       const patch = parseBody<TaskUpdateDto>(body)
       const updated: Task = { ...tasks[index], ...patch, id: tasks[index].id }
@@ -143,14 +143,14 @@ function handleTasks(
     case 'delete': {
       const exists = tasks.some((t) => t.id === id)
       if (!exists) {
-        throw new ApiError('Завдання не знайдено', 404)
+        throw new ApiError('Task not found', 404)
       }
       storage.setTasks(tasks.filter((t) => t.id !== id))
       return { id }
     }
 
     default:
-      throw new ApiError(`Метод ${method} не підтримується`, 405)
+      throw new ApiError(`Method ${method} is not supported`, 405)
   }
 }
 
@@ -180,6 +180,6 @@ export const mockAdapter: AxiosAdapter = async (config: InternalAxiosRequestConf
     case 'tasks':
       return ok(handleTasks(method, id, params, config.data), config)
     default:
-      throw new ApiError(`Невідомий ресурс: ${resource}`, 404)
+      throw new ApiError(`Unknown resource: ${resource}`, 404)
   }
 }

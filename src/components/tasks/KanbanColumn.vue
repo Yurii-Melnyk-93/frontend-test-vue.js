@@ -20,7 +20,7 @@
       </template>
     </draggable>
 
-    <p v-if="tasks.length === 0" class="column__empty">Немає завдань</p>
+    <p v-if="tasks.length === 0" class="column__empty">No tasks</p>
   </section>
 </template>
 

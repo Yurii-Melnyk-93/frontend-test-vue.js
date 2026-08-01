@@ -58,7 +58,7 @@ export const useTasksStore = defineStore('tasks', () => {
     try {
       items.value = await tasksApi.getAll()
     } catch (e) {
-      error.value = e instanceof ApiError ? e.message : 'Не вдалося завантажити завдання'
+      error.value = e instanceof ApiError ? e.message : 'Failed to load tasks'
     } finally {
       loading.value = false
     }
@@ -72,7 +72,7 @@ export const useTasksStore = defineStore('tasks', () => {
       // Update only this project's tasks.
       items.value = [...items.value.filter((t) => t.projectId !== projectId), ...list]
     } catch (e) {
-      error.value = e instanceof ApiError ? e.message : 'Не вдалося завантажити завдання'
+      error.value = e instanceof ApiError ? e.message : 'Failed to load tasks'
     } finally {
       loading.value = false
     }
@@ -174,7 +174,7 @@ export const useTasksStore = defineStore('tasks', () => {
     try {
       await persist(ids)
     } catch (e) {
-      error.value = e instanceof ApiError ? e.message : 'Не вдалося зберегти порядок'
+      error.value = e instanceof ApiError ? e.message : 'Failed to save the order'
       await fetchByProject(projectId)
     }
   }

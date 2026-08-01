@@ -18,10 +18,10 @@ export const projectFormSchema = toTypedSchema(
   z.object({
     name: z
       .string()
-      .min(1, "Поле обов'язкове")
-      .min(2, 'від 2 до 100 символів')
-      .max(100, 'від 2 до 100 символів'),
-    description: z.string().max(500, 'до 500 символів').default(''),
+      .min(1, 'This field is required')
+      .min(2, '2 to 100 characters')
+      .max(100, '2 to 100 characters'),
+    description: z.string().max(500, 'up to 500 characters').default(''),
   }),
 )
 
@@ -30,16 +30,16 @@ export const taskFormSchema = toTypedSchema(
   z.object({
     name: z
       .string()
-      .min(1, "Поле обов'язкове")
-      .min(3, 'від 3 до 120 символів')
-      .max(120, 'від 3 до 120 символів'),
+      .min(1, 'This field is required')
+      .min(3, '3 to 120 characters')
+      .max(120, '3 to 120 characters'),
     status: z.nativeEnum(TaskStatus, {
-      errorMap: () => ({ message: 'Оберіть статус' }),
+      errorMap: () => ({ message: 'Select a status' }),
     }),
     dueDate: z
       .string()
-      .min(1, "Поле обов'язкове")
-      .refine(isNotPast, { message: 'Дата не може бути в минулому' }),
+      .min(1, 'This field is required')
+      .refine(isNotPast, { message: 'The date cannot be in the past' }),
     assignee: z.string().default(''),
   }),
 )
