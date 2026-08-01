@@ -6,6 +6,10 @@ import type { Task } from '@/types/task'
 
 const PROJECTS_KEY = 'ptm.projects'
 const TASKS_KEY = 'ptm.tasks'
+// Bump this whenever the seed data itself changes (e.g. re-translated),
+// so previously-seeded localStorage gets replaced instead of left stale.
+const SEED_VERSION_KEY = 'ptm.seedVersion'
+const SEED_VERSION = '2'
 
 function read<T>(key: string, fallback: T): T {
   const raw = localStorage.getItem(key)
@@ -23,9 +27,9 @@ function write<T>(key: string, value: T): void {
   localStorage.setItem(key, JSON.stringify(value))
 }
 
-/** Demo data for the first run (when localStorage is empty). */
+/** Demo data for the first run (when localStorage is empty or the seed is outdated). */
 function seed(): void {
-  if (localStorage.getItem(PROJECTS_KEY) !== null) {
+  if (localStorage.getItem(PROJECTS_KEY) !== null && localStorage.getItem(SEED_VERSION_KEY) === SEED_VERSION) {
     return
   }
 
@@ -124,6 +128,7 @@ function seed(): void {
 
   write(PROJECTS_KEY, projects)
   write(TASKS_KEY, tasks)
+  localStorage.setItem(SEED_VERSION_KEY, SEED_VERSION)
 }
 
 export const storage = {
